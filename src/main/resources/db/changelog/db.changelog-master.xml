@@ -40,4 +40,15 @@
                                  constraintName="fk_employee_hobbies" onDelete="CASCADE"
                                  referencedTableSchemaName="employees" referencedTableName="employee" referencedColumnNames="id"/>
     </changeSet>
+    <changeSet id="2" author="Suntrie">
+        <addColumn tableName="employee" schemaName="employees">
+            <column name="version" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="3" author="Suntrie">
+        <update tableName="employee" schemaName="employees">
+            <column name="version" valueNumeric="0"/>
+            <where>version IS NULL</where>
+        </update>
+    </changeSet>
 </databaseChangeLog>

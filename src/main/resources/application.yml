@@ -1,3 +1,6 @@
+server:
+  port: 8089
+
 spring.datasource.url: jdbc:postgresql://localhost:5432/employees
 spring.datasource.username: suntrie #TODO: env
 spring.datasource.password: be
@@ -8,3 +11,11 @@ spring.datasource.driver-class-name: org.postgresql.Driver
 spring.jpa.show-sql: true
 spring.jpa.database: postgresql
 spring.jpa.hibernate.ddl-auto: none
+
+springdoc:
+  api-docs:
+    path: /open-api-docs
+  swagger-ui:
+    path: /swagger
+    tags-sorter: alpha
+    operations-sorter: method
