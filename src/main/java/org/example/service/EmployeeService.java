@@ -8,8 +8,6 @@ import org.example.domain.dto.EmployeeVDTO;
 import org.example.domain.model.Employee;
 import org.example.mappers.EmployeeMapper;
 import org.example.repository.EmployeeRepository;
-import org.springdoc.core.converters.models.Pageable;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,10 +26,10 @@ public class EmployeeService {
     private final EmployeeMapper employeeMapper;
 
     @Transactional
-    public EmployeeVDTO createEmployee(EmployeeCDTO employeeCDTO){
+    public EmployeeVDTO createEmployee(EmployeeCDTO employeeCDTO) {
         Optional<Employee> employeeOptional = employeeRepository.findByEmail(employeeCDTO.getEmail());
 
-        if (employeeOptional.isPresent()){
+        if (employeeOptional.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee already exists");
         }
         Employee employee = employeeMapper.toEntity(employeeCDTO);
@@ -39,7 +37,7 @@ public class EmployeeService {
     }
 
     @Transactional
-    public void deleteEmployee(UUID employeeId){
+    public void deleteEmployee(UUID employeeId) {
         Employee employee = getByIdOrThrow(employeeId);
         employeeRepository.delete(employee);
     }
@@ -52,7 +50,7 @@ public class EmployeeService {
         Optional<Employee> employeeDuplicateOpt =
                 employeeRepository.findByEmailAndIdNot(employeeUDTO.getEmail(), employeeId);
 
-        if (employeeDuplicateOpt.isPresent()){
+        if (employeeDuplicateOpt.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee duplicate (email field must be unique)");
         }
 

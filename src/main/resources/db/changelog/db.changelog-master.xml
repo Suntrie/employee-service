@@ -11,7 +11,7 @@
     </changeSet>
     <changeSet id="1" author="Suntrie">
         <createTable schemaName="employees" tableName="employee">
-            <column name="id"  type="${uuid_type}" defaultValueComputed="${uuid_function}">
+            <column name="id" type="${uuid_type}" defaultValueComputed="${uuid_function}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="first_name" type="varchar(255)">
@@ -27,7 +27,7 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <createTable schemaName="employees"  tableName="hobby">
+        <createTable schemaName="employees" tableName="hobby">
             <column name="employee_id" type="uuid">
                 <constraints nullable="false"/>
             </column>
@@ -38,7 +38,8 @@
         <addForeignKeyConstraint baseTableSchemaName="employees" baseTableName="hobby"
                                  baseColumnNames="employee_id"
                                  constraintName="fk_employee_hobbies" onDelete="CASCADE"
-                                 referencedTableSchemaName="employees" referencedTableName="employee" referencedColumnNames="id"/>
+                                 referencedTableSchemaName="employees" referencedTableName="employee"
+                                 referencedColumnNames="id"/>
     </changeSet>
     <changeSet id="2" author="Suntrie">
         <addColumn tableName="employee" schemaName="employees">
@@ -50,5 +51,40 @@
             <column name="version" valueNumeric="0"/>
             <where>version IS NULL</where>
         </update>
+    </changeSet>
+    <changeSet id="4" author="Suntrie">
+        <dropColumn tableName="employee" schemaName="employees" columnName="version"/>
+    </changeSet>
+    <changeSet id="5" author="Suntrie">
+        <createTable schemaName="employees" tableName="user">
+            <column name="id" type="${uuid_type}" defaultValueComputed="${uuid_function}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable schemaName="employees" tableName="user_role">
+            <column name="user_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableSchemaName="employees" baseTableName="user_role"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_user_roles" onDelete="CASCADE"
+                                 referencedTableSchemaName="employees" referencedTableName="user"
+                                 referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>

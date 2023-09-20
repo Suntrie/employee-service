@@ -105,7 +105,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "200", description = "The employee received",
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = EmployeeLDTO.class)))})})
-    public List<EmployeeLDTO> getEmployees(){
+    public List<EmployeeLDTO> getEmployees() {
         return employeeService.getEmployees();
     }
 }

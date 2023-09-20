@@ -19,3 +19,9 @@ springdoc:
     path: /swagger
     tags-sorter: alpha
     operations-sorter: method
+
+logging:
+  level:
+    root: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG

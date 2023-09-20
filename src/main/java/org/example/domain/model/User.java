@@ -1,76 +1,31 @@
 package org.example.domain.model;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import jakarta.persistence.*;
 
-import java.util.Collection;
-import java.util.UUID;
+import java.util.List;
 
+
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-@EqualsAndHashCode(of = {"id"})
 @Table(
         name = "user",
         schema = "employees"
 )
-public class User implements UserDetails {
+public class User extends Person {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id")
-    private UUID id;
+    @Column(name = "password", length = 100)
+    private String password;
 
-    @Column(name = "first_name", length = 100)
-    private String firstName;
-
-    @Column(name = "last_name", length = 100)
-    private String lastName;
-
-    @Column(name = "middle_name", length = 100)
-    private String middleName;
-
-    @Column(name = "email", length = 254)
-    private String email;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
+    @ElementCollection(fetch = FetchType.EAGER, targetClass = UserRole.class)
+    @CollectionTable(
+            schema = "employees",
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id")
+    )
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    List<UserRole> userRoles;
 }

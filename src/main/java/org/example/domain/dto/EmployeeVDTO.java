@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class EmployeeVDTO{
+public class EmployeeVDTO {
 
     @Schema(description = "Employee's first name")
     private String firstName;

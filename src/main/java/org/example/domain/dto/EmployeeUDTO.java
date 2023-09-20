@@ -11,9 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 
-//TODO: strategies + required fields = ask
 @Data
-public class EmployeeUDTO{
+public class EmployeeUDTO {
 
     @Schema(description = "Employee's first name")
     @NotBlank

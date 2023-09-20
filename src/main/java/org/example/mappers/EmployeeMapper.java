@@ -1,6 +1,5 @@
 package org.example.mappers;
 
-
 import org.example.domain.dto.EmployeeCDTO;
 import org.example.domain.dto.EmployeeLDTO;
 import org.example.domain.dto.EmployeeUDTO;
@@ -19,7 +18,7 @@ import java.util.Date;
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface EmployeeMapper {
 
-    @Mappings({@Mapping(target = "birthday", expression = "java(formatDate(employeeCDTO.getBirthday()))")})
+    @Mapping(target = "birthday", expression = "java(formatDate(employeeCDTO.getBirthday()))")
     Employee toEntity(EmployeeCDTO employeeCDTO);
 
     EmployeeVDTO toVDTO(Employee employee);
@@ -28,7 +27,7 @@ public interface EmployeeMapper {
 
     EmployeeLDTO toLDTO(Employee employee);
 
-    default Date formatDate(Date date){
+    default Date formatDate(Date date) {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         try {
             return formatter.parse(formatter.format(date));

@@ -12,7 +12,6 @@ import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-//TODO: adopt validation (=?)
 @Configuration
 public class OpenApiConfig {
     @Bean
@@ -33,7 +32,7 @@ public class OpenApiConfig {
                 .info(new Info().title("Employee Service API"));
     }
 
-   @Bean
+    @Bean
     public OpenApiCustomizer customerGlobalHeaderOpenApiCustomiser() {
 
         return openApi -> {

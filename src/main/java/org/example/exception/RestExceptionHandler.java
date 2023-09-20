@@ -33,8 +33,8 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(errorMessage.build(), headers, code);
     }
 
-    private ResponseEntity<ErrorMessage> buildResponse( HttpStatusCode httpStatusCode,
-            String exceptionMessage) {
+    private ResponseEntity<ErrorMessage> buildResponse(HttpStatusCode httpStatusCode,
+                                                       String exceptionMessage) {
         return buildResponse(exceptionMessage, httpStatusCode, new HashMap<>());
     }
 
@@ -47,7 +47,7 @@ public class RestExceptionHandler {
                 .collect(Collectors.toMap(
                         FieldError::getField,
                         DefaultMessageSourceResolvable::getDefaultMessage)); //TODO: default lang
-        return buildResponse("Method argument not valid", HttpStatus.BAD_REQUEST,  errors);
+        return buildResponse("Method argument not valid", HttpStatus.BAD_REQUEST, errors);
     }
 
     @ExceptionHandler(Exception.class)
