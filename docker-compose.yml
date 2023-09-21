@@ -1,6 +1,19 @@
 version: "3.7"
 
 services:
+
+  employee-service:
+    container_name: employees-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DB_HOST=employees-dev-db
+      - DB_PORT=5432
+      - KAFKA_URL=employee-service-kafka:9093
+    ports:
+      - "8080:8080"
+
   employees-dev-db:
     container_name: employees-dev-db
     image: postgres:16.0
@@ -15,6 +28,7 @@ services:
     command: ["--autovacuum=off"]
     ports:
       - "127.0.0.1:5432:5432"
+
   employee-service-zookeeper:
     image: 'bitnami/zookeeper:latest'
     ports:
@@ -28,10 +42,12 @@ services:
       - '9092:9092'
     environment:
       - KAFKA_BROKER_ID=1
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
+      - KAFKA_CFG_LISTENERS=CLIENT://:9093,EXTERNAL://:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://employee-service-kafka:9093,EXTERNAL://127.0.0.1:9092
       - KAFKA_CFG_ZOOKEEPER_CONNECT=employee-service-zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
     depends_on:
       - employee-service-zookeeper
 

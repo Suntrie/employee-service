@@ -6,7 +6,7 @@ import org.example.domain.dto.EmployeeLDTO;
 import org.example.domain.dto.EmployeeUDTO;
 import org.example.domain.dto.EmployeeVDTO;
 import org.example.domain.model.Employee;
-import org.example.exchange.KafkaProducer;
+import org.example.exchange.KafkaProducerInterface;
 import org.example.mappers.EmployeeMapper;
 import org.example.repository.EmployeeRepository;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
-    private final KafkaProducer kafkaProducer;
+    private final KafkaProducerInterface kafkaProducer;
 
     //bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic on-employee-change-topic --from-beginning
     @Transactional

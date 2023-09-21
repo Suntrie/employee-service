@@ -1,12 +1,12 @@
 package org.example.integration;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.example.domain.model.UserRole;
 import org.example.repository.AppUserRepository;
 import org.example.security.JwtTokenProvider;
+import org.junit.ClassRule;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +16,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
-import org.junit.ClassRule;
 
-import java.util.*;
+import java.util.List;
 
 
-//@ActiveProfiles("log4j2-spring.xml")
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(initializers = AbstractIntegrationTest.DockerPostgresInitializer.class)
@@ -34,8 +34,8 @@ import java.util.*;
 @Slf4j
 public abstract class AbstractIntegrationTest {
     private static final String POSTGRES_CURRENT_VERSION = "postgres:12.7";
-    private static final String DB_USER = "krst_user";
-    private static final String DB_NAME = "krst_db";
+    private static final String DB_USER = "test_user";
+    private static final String DB_NAME = "test_db";
     private static final String DB_PASSWORD = "886-P&W-5FB";
 
     @Autowired

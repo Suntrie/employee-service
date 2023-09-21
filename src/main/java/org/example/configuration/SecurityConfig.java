@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -59,7 +58,7 @@ public class SecurityConfig {
         return web -> web
                 .ignoring()
                 .requestMatchers("/swagger-ui.html", "/swagger-resources/**", "/swagger-ui/**",
-                        "/open-api-docs/**","/api/users/signin");
+                        "/open-api-docs/**","/api/users/signin", "/actuator/health");
     }
 
     @Bean

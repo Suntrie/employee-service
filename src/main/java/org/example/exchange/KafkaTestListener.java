@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-@ConditionalOnProperty("spring.kafka.consumer.enabled")
+@ConditionalOnProperty("spring.kafka.enabled")
 public class KafkaTestListener {
     @KafkaListener(topics = "${spring.kafka.topic.on-employee-change}")
     public void listenEmployeeUpdateEvents(@Payload EmployeeVDTO employeeVDTO) {

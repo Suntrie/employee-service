@@ -27,16 +27,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class EmployeeControllerTest extends AbstractIntegrationTest{
     @Autowired
     private MockMvc mockMvc;
-/*
-    management:
-    endpoint:
-    info:
-    enabled: true
-    health:
-    probes:
-    enabled: true
-    startup:
-    enabled: true*/
 
     @Nested
     @Transactional

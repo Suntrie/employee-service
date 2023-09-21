@@ -1,21 +1,21 @@
 server:
-  port: 8089
+  port: 8080
 
-spring.datasource.url: jdbc:postgresql://localhost:5432/employees
-spring.datasource.username: suntrie
-spring.datasource.password: be
+spring.datasource.url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_DATABASE:employees}
+spring.datasource.username: ${DB_USERNAME:suntrie}
+spring.datasource.password: ${DB_PASSWORD:be}
 spring.liquibase.change-log: classpath:db/changelog/db.changelog-master.xml
 spring:
   jpa:
     open-in-view: false
   kafka:
     client-id: employee-service
-    bootstrap-servers: 127.0.0.1:9092
+    bootstrap-servers: ${KAFKA_URL:127.0.0.1:9092}
+    enabled: true
     producer:
       key-serializer: org.apache.kafka.common.serialization.UUIDSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
-      enabled: false
       auto-offset-reset: earliest
       group-id: test-group
       key-deserializer: org.apache.kafka.common.serialization.UUIDDeserializer
@@ -42,7 +42,7 @@ springdoc:
 logging:
   file:
     name: './log/app.log'
-  level:
-    root: DEBUG
-    org.springframework.web: DEBUG
-    org.springframework.security: DEBUG
+#  level:
+#    root: DEBUG
+#    org.springframework.web: DEBUG
+#    org.springframework.security: DEBUG

@@ -9,9 +9,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.example.domain.dto.UserLoginDTO;
 import org.example.domain.dto.UserVDTO;
 import org.example.service.AppUserService;
 import org.springframework.http.HttpStatus;
@@ -41,10 +42,8 @@ public class UserController {
             @ApiResponse(responseCode = "422", description = "Invalid login/pass",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ResponseStatusException.class)))})
-    public String login(
-            @Parameter(description = "Username") @RequestParam @NotBlank String username,
-            @Parameter(description = "Password") @RequestParam @NotBlank String password) {
-        return appUserService.login(username, password);
+    public String login(@Parameter(description = "User's credentials") @Valid @RequestBody UserLoginDTO userLoginDTO){
+        return appUserService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword());
     }
 
     @GetMapping(value = "/me")
