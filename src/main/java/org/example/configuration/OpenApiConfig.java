@@ -7,10 +7,14 @@ import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import org.apache.commons.lang3.tuple.Pair;
 import org.example.exception.ErrorMessage;
 import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
+import java.util.Set;
 
 @Configuration
 public class OpenApiConfig {
@@ -39,6 +43,11 @@ public class OpenApiConfig {
             Paths paths = openApi.getPaths();
             for (PathItem path : paths.values()) {
                 for (Operation operation : path.readOperations()) {
+
+                    if (Set.of(Pair.of(List.of("User Controller"),"login"))
+                            .contains(Pair.of(operation.getTags(), operation.getOperationId()))){
+                        continue;
+                    }
                     operation.getResponses().
                             addApiResponse("401", new ApiResponse().description("Authorization required")
                                     .content(new Content()

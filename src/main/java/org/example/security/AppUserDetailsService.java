@@ -1,31 +1,31 @@
-package org.example.configuration.security;
+package org.example.security;
 
 import lombok.RequiredArgsConstructor;
-import org.example.domain.model.User;
-import org.example.repository.UserRepository;
+import org.example.domain.model.AppUser;
+import org.example.repository.AppUserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
-public class MyUserDetails implements UserDetailsService {
+public class AppUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final AppUserRepository appUserRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final User appUser = userRepository.findByFirstName(username);
+        final AppUser appUser = appUserRepository.findByEmail(username)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "User doesn't exist")); //TODO
 
-        if (appUser == null) {
-            throw new UsernameNotFoundException("User '" + username + "' not found");
-        }
-
-        return org.springframework.security.core.userdetails.User
+        return User
                 .withUsername(username)
                 .password(appUser.getPassword())
-                .authorities(appUser.getUserRoles())
+                .authorities(appUser.getAuthorities())
                 .accountExpired(false)
                 .accountLocked(false)
                 .credentialsExpired(false)

@@ -1,6 +1,8 @@
-package org.example.configuration.security;
+package org.example.configuration;
 
 import lombok.RequiredArgsConstructor;
+import org.example.security.JwtTokenFilterConfigurer;
+import org.example.security.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -34,6 +36,7 @@ public class SecurityConfig {
                     try {
                         authorizeHttpRequests
                                 .requestMatchers("/api/users/signin").permitAll()
+                                .requestMatchers("/error").permitAll()
                                 .requestMatchers("/api/employees/**").hasRole("USER")
                                 .anyRequest().authenticated()
                         ;
@@ -64,5 +67,6 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager() throws Exception {
         return authConfiguration.getAuthenticationManager();
     }
+
 
 }

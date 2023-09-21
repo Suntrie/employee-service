@@ -45,7 +45,7 @@ public class EmployeeService {
     //TODO: osiv?
 
     @Transactional
-    public EmployeeVDTO updateEmployee(UUID employeeId, EmployeeUDTO employeeUDTO) throws InterruptedException {
+    public EmployeeVDTO updateEmployee(UUID employeeId, EmployeeUDTO employeeUDTO) {
         Employee employee = getByIdOrThrow(employeeId);
         Optional<Employee> employeeDuplicateOpt =
                 employeeRepository.findByEmailAndIdNot(employeeUDTO.getEmail(), employeeId);
@@ -56,14 +56,12 @@ public class EmployeeService {
 
         employee = employeeMapper.updateEntity(employee, employeeUDTO);
 
-        Thread.sleep(5000);
-
         return employeeMapper.toVDTO(employeeRepository.save(employee));
     }
 
     private Employee getByIdOrThrow(UUID employeeId) {
         return employeeRepository.findById(employeeId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee doesn't exist"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee doesn't exist"));
     }
 
     public EmployeeVDTO getEmployee(UUID employeeId) {

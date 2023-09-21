@@ -87,7 +87,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "404", description = "The employee doesn't exist",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ResponseStatusException.class)))})
-    public EmployeeVDTO getEmployee(@Parameter(description = "Employee's id") @NotNull @PathVariable UUID employeeId) throws InterruptedException {
+    public EmployeeVDTO getEmployee(@Parameter(description = "Employee's id") @NotNull @PathVariable UUID employeeId) {
         return employeeService.getEmployee(employeeId);
     }
 

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 @Slf4j
-public class RestExceptionHandler {
+public class GlobalExceptionHandler {
 
     private ResponseEntity<ErrorMessage> buildResponse(String exceptionMessage,
                                                        HttpStatusCode httpStatusCode,
