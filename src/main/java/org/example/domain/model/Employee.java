@@ -1,8 +1,8 @@
 package org.example.domain.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 import java.util.List;
@@ -11,7 +11,8 @@ import java.util.List;
 @Entity
 @Table(name = "employee", schema = "employees")
 @Data
-//TODO: validation
+@SuperBuilder
+@NoArgsConstructor
 public class Employee extends Person {
 
     @Column(name = "birthday")

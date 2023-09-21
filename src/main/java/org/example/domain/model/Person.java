@@ -1,15 +1,16 @@
 package org.example.domain.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.UUID;
 
 @Data
 @MappedSuperclass
+@SuperBuilder
+@NoArgsConstructor
 public abstract class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

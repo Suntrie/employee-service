@@ -10,7 +10,7 @@ To start employee-service from IDE the next steps should be proceeded:
 To start it as a container you also could follow the next steps:
 
 1. Build application .jar (with use of Maven package, by default this stage also includes tests execution);
-2. Execute docker-compose.yml from the root folder. It will at first create start container with Postgres database, Zookeeper service and Kafka broker.
+2. Uncomment employee-service and execute docker-compose.yml from the root folder. It will at first create start container with Postgres database, Zookeeper service and Kafka broker.
 
 After the start you could use swagger endpoints to access service functionality.
 Swagger endpoints are available as http://localhost:8080/swagger-ui/index.html.
