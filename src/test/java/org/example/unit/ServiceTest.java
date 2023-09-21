@@ -1,4 +1,4 @@
-package org.example;
+package org.example.unit;
 
 import org.example.repository.EmployeeRepository;
 import org.example.service.EmployeeService;

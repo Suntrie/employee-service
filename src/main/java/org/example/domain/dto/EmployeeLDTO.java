@@ -4,9 +4,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 public class EmployeeLDTO {
+
+    @Schema(description = "Employee's id")
+    private UUID id;
+
     @Schema(description = "Employee's first name")
     private String firstName;
 

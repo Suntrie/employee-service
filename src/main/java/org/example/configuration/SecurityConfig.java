@@ -37,7 +37,7 @@ public class SecurityConfig {
                         authorizeHttpRequests
                                 .requestMatchers("/api/users/signin").permitAll()
                                 .requestMatchers("/error").permitAll()
-                                .requestMatchers("/api/employees/**").hasRole("USER")
+                                .requestMatchers("/api/employees/**").permitAll()
                                 .anyRequest().authenticated()
                         ;
                     } catch (Exception e) {

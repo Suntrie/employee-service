@@ -5,9 +5,13 @@ import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 public class EmployeeVDTO {
+
+    @Schema(description = "Employee's id")
+    private UUID id;
 
     @Schema(description = "Employee's first name")
     private String firstName;

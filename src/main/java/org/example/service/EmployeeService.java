@@ -42,8 +42,6 @@ public class EmployeeService {
         employeeRepository.delete(employee);
     }
 
-    //TODO: osiv?
-
     @Transactional
     public EmployeeVDTO updateEmployee(UUID employeeId, EmployeeUDTO employeeUDTO) {
         Employee employee = getByIdOrThrow(employeeId);

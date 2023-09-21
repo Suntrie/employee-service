@@ -5,13 +5,19 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
 
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class EmployeeUDTO {
 
     @Schema(description = "Employee's first name")
