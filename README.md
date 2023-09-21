@@ -25,5 +25,9 @@ To access methods of the resource controller EmployeeController you should use e
 If other users are required, they can be added manually into the database
 (tables employees.user and employees.user_role).
 
+As a result of POST/PUT invocations events are sent to the Kafka broker. Test listener
+that could be switched off (application.yml -> spring.kafka.enabled) is added, by default, all received messages are logged
+and could be found in ./log/app.log.
+
 Integration tests and some unit tests also could be found in src/test/java/integration
 and src/test/java/unit folders respectively. 

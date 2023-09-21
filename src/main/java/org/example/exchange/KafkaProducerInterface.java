@@ -1,7 +1,7 @@
 package org.example.exchange;
 
-import org.example.domain.dto.EmployeeVDTO;
+import org.example.domain.dto.EmployeeMVDTO;
 
 public interface KafkaProducerInterface {
-    void sendEmployee(EmployeeVDTO employeeVDTO);
+    void sendEmployee(EmployeeMVDTO employeeVDTO);
 }

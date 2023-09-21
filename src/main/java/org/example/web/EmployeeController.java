@@ -17,7 +17,6 @@ import org.example.domain.dto.EmployeeUDTO;
 import org.example.domain.dto.EmployeeVDTO;
 import org.example.exception.ErrorMessage;
 import org.example.service.EmployeeService;
-import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -76,7 +75,7 @@ public class EmployeeController {
                             schema = @Schema(implementation = ResponseStatusException.class)))})
     @PreAuthorize("hasRole('ADMIN')")
     public EmployeeVDTO updateEmployee(@Parameter(description = "Employee's id") @NotNull @PathVariable UUID employeeId,
-                                       @Parameter(description = "New employee's description") @Valid @RequestBody EmployeeUDTO employeeUDTO) throws InterruptedException {
+                                       @Parameter(description = "New employee's description") @Valid @RequestBody EmployeeUDTO employeeUDTO) {
         return employeeService.updateEmployee(employeeId, employeeUDTO);
     }
 
@@ -94,12 +93,6 @@ public class EmployeeController {
     public EmployeeVDTO getEmployee(@Parameter(description = "Employee's id") @NotNull @PathVariable UUID employeeId) {
         return employeeService.getEmployee(employeeId);
     }
-
-
-    //TODO: validation - model, security, data types, OSIV, tests, readme + docker check + Kafka
-    //Check lists mapping - save, update, delete
-    //read transactional = ?
-    //
 
     @GetMapping
     @Operation(description = "Get employees")

@@ -1,9 +1,6 @@
 package org.example.mappers;
 
-import org.example.domain.dto.EmployeeCDTO;
-import org.example.domain.dto.EmployeeLDTO;
-import org.example.domain.dto.EmployeeUDTO;
-import org.example.domain.dto.EmployeeVDTO;
+import org.example.domain.dto.*;
 import org.example.domain.model.Employee;
 import org.mapstruct.*;
 import org.springframework.http.HttpStatus;
@@ -22,6 +19,9 @@ public interface EmployeeMapper {
     Employee toEntity(EmployeeCDTO employeeCDTO);
 
     EmployeeVDTO toVDTO(Employee employee);
+
+    @Mapping(target = "method", ignore = true)
+    EmployeeMVDTO toMVDTO(Employee employee);
 
     Employee updateEntity(@MappingTarget Employee employee, EmployeeUDTO employeeUDTO);
 
