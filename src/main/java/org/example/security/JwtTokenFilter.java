@@ -39,7 +39,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
         if (token == null){
             httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());
-            //throw new BadCredentialsException("a!");
         }else {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
         }

@@ -29,8 +29,6 @@ public class AppUser extends Person implements UserDetails {
     @Enumerated(EnumType.STRING)
     private List<UserRole> authorities;
 
-
-    //TODO: replace firstName
     @Override
     public String getUsername() {
         return this.getEmail();

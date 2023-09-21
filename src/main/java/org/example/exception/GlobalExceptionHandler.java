@@ -3,6 +3,7 @@ package org.example.exception;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.*;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -46,17 +47,22 @@ public class GlobalExceptionHandler {
                 .stream()
                 .collect(Collectors.toMap(
                         FieldError::getField,
-                        DefaultMessageSourceResolvable::getDefaultMessage)); //TODO: default lang
+                        DefaultMessageSourceResolvable::getDefaultMessage));
         return buildResponse("Method argument not valid", HttpStatus.BAD_REQUEST, errors);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorMessage> handleException(Exception ex) {
-        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorMessage> handleException(AccessDeniedException ex) {
+        return buildResponse(HttpStatus.FORBIDDEN, ex.getMessage());
     }
 
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ErrorMessage> handleRestException(ResponseStatusException ex) {
         return buildResponse(ex.getStatusCode(), ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorMessage> handleException(Exception ex) {
+        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
     }
 }

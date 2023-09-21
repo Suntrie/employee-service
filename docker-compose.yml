@@ -8,7 +8,6 @@ services:
     volumes:
       - employees-dev-db-volume:/var/lib/postgresql/data
       - ./database/postgres/docker-entrypoint-initdb:/docker-entrypoint-initdb.d/
-      #- ./dump:/home/postgres/dump #TODO
     environment:
       - POSTGRES_USER=suntrie
       - POSTGRES_PASSWORD=be

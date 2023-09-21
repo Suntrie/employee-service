@@ -55,7 +55,7 @@ public class SecurityConfig {
         return web -> web
                 .ignoring()
                 .requestMatchers("/swagger-ui.html", "/swagger-resources/**", "/swagger-ui/**",
-                        "/open-api-docs/**");
+                        "/open-api-docs/**","/api/users/signin");
     }
 
     @Bean

@@ -9,11 +9,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 
 import org.example.domain.dto.UserVDTO;
 import org.example.service.AppUserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -22,7 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/api/users")
 @Tag(name = "User Controller", description = "Methods to control user access")
 @RequiredArgsConstructor
-//TODO: validation
+@Validated
 public class UserController {
 
     private final AppUserService appUserService;
@@ -40,8 +43,8 @@ public class UserController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ResponseStatusException.class)))})
     public String login(
-            @Parameter(description = "Username") @RequestParam String username,
-            @Parameter(description = "Password") @RequestParam String password) {
+            @Parameter(description = "Username") @RequestParam @NotBlank String username,
+            @Parameter(description = "Password") @RequestParam @NotBlank String password) {
         return appUserService.login(username, password);
     }
 

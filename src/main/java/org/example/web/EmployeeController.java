@@ -19,6 +19,7 @@ import org.example.exception.ErrorMessage;
 import org.example.service.EmployeeService;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,7 +27,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.UUID;
 
-//Validate = customize Exc
 @RestController
 @RequestMapping("/api/employees")
 @Tag(name = "Employee Controller", description = "Methods to control employees")
@@ -38,7 +38,7 @@ public class EmployeeController {
 
     @PostMapping
     @Operation(description = "Create an employee")
-    @ResponseStatus(HttpStatus.CREATED) //TODO: preauth?
+    @ResponseStatus(HttpStatus.CREATED)
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "New employee created",
                     content = {@Content(mediaType = "application/json",
@@ -46,6 +46,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "400", description = "The employee already exists",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorMessage.class)))})
+    @PreAuthorize("hasRole('ADMIN')")
     public EmployeeVDTO createEmployee(@Parameter(description = "Employee's description") @Valid @RequestBody EmployeeCDTO employeeCDTO) {
         return employeeService.createEmployee(employeeCDTO);
     }
@@ -58,6 +59,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "400", description = "The employee doesn't exist",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorMessage.class)))})
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteEmployee(@Parameter(description = "Employee's id") @NotNull @PathVariable UUID employeeId) {
         employeeService.deleteEmployee(employeeId);
     }
@@ -72,6 +74,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "400", description = "The employee doesn't exist",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ResponseStatusException.class)))})
+    @PreAuthorize("hasRole('ADMIN')")
     public EmployeeVDTO updateEmployee(@Parameter(description = "Employee's id") @NotNull @PathVariable UUID employeeId,
                                        @Parameter(description = "New employee's description") @Valid @RequestBody EmployeeUDTO employeeUDTO) throws InterruptedException {
         return employeeService.updateEmployee(employeeId, employeeUDTO);
@@ -87,6 +90,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "404", description = "The employee doesn't exist",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ResponseStatusException.class)))})
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public EmployeeVDTO getEmployee(@Parameter(description = "Employee's id") @NotNull @PathVariable UUID employeeId) {
         return employeeService.getEmployee(employeeId);
     }
@@ -105,6 +109,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "200", description = "The employee received",
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = EmployeeLDTO.class)))})})
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public List<EmployeeLDTO> getEmployees() {
         return employeeService.getEmployees();
     }

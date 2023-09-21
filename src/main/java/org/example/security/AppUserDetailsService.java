@@ -20,7 +20,7 @@ public class AppUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final AppUser appUser = appUserRepository.findByEmail(username)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "User doesn't exist")); //TODO
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "User doesn't exist"));
 
         return User
                 .withUsername(username)
