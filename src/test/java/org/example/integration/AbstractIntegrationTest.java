@@ -25,7 +25,7 @@ import org.junit.ClassRule;
 import java.util.*;
 
 
-//@ActiveProfiles("test")
+//@ActiveProfiles("log4j2-spring.xml")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(initializers = AbstractIntegrationTest.DockerPostgresInitializer.class)

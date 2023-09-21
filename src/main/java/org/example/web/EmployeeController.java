@@ -104,7 +104,6 @@ public class EmployeeController {
     @GetMapping
     @Operation(description = "Get employees")
     @ResponseStatus(HttpStatus.OK)
-    @PageableAsQueryParam
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "The employee received",
                     content = {@Content(mediaType = "application/json",

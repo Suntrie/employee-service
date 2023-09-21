@@ -3,12 +3,15 @@ package org.example.configuration;
 import lombok.RequiredArgsConstructor;
 import org.example.security.JwtTokenFilterConfigurer;
 import org.example.security.JwtTokenProvider;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
+import org.springframework.boot.actuate.health.HealthEndpoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -20,7 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -35,6 +38,7 @@ public class SecurityConfig {
                 {
                     try {
                         authorizeHttpRequests
+                                .requestMatchers(EndpointRequest.to(HealthEndpoint.class)).anonymous()
                                 .requestMatchers("/api/users/signin").permitAll()
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers("/api/employees/**").permitAll()

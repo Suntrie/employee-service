@@ -6,6 +6,7 @@ import org.example.domain.dto.EmployeeLDTO;
 import org.example.domain.dto.EmployeeUDTO;
 import org.example.domain.dto.EmployeeVDTO;
 import org.example.domain.model.Employee;
+import org.example.exchange.KafkaProducer;
 import org.example.mappers.EmployeeMapper;
 import org.example.repository.EmployeeRepository;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,9 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
+    private final KafkaProducer kafkaProducer;
 
+    //bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic on-employee-change-topic --from-beginning
     @Transactional
     public EmployeeVDTO createEmployee(EmployeeCDTO employeeCDTO) {
         Optional<Employee> employeeOptional = employeeRepository.findByEmail(employeeCDTO.getEmail());
@@ -33,7 +36,9 @@ public class EmployeeService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee already exists");
         }
         Employee employee = employeeMapper.toEntity(employeeCDTO);
-        return employeeMapper.toVDTO(employeeRepository.save(employee));
+        EmployeeVDTO employeeVDTO = employeeMapper.toVDTO(employeeRepository.save(employee));
+        kafkaProducer.sendEmployee(employeeVDTO);
+        return employeeVDTO;
     }
 
     @Transactional

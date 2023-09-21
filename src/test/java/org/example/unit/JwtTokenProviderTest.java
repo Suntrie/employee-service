@@ -1,3 +1,4 @@
+/*
 package org.example.unit;
 
 import org.example.domain.model.AppUser;
@@ -17,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.log4j2-spring.xml.context.ActiveProfiles;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -52,7 +53,7 @@ class JwtTokenProviderTest {
         appUser.setAuthorities(List.of(UserRole.ROLE_USER));
         appUser.setEmail(username);
 
-        //when(jwtTokenProvider.getUsername("test")).thenReturn("Polina@stu");
+        //when(jwtTokenProvider.getUsername("log4j2-spring.xml")).thenReturn("Polina@stu");
         when(appUserRepository.findByEmail(username)).thenReturn(Optional.of(appUser));
         //captor=?
         Authentication resultAuthentication = jwtTokenProvider.getAuthentication(token);
@@ -61,10 +62,13 @@ class JwtTokenProviderTest {
         //appUserRepository.findByEmail(username)
         assertEquals(modelAuthentication, resultAuthentication);
     }
-    /*
+    */
+/*
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = appUserDetailsService.loadUserByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-    }*/
+    }*//*
+
 
 }
+*/

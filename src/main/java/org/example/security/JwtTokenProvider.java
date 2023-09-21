@@ -1,4 +1,3 @@
-/*
 package org.example.security;
 
 import io.jsonwebtoken.Claims;
@@ -9,7 +8,6 @@ import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.example.domain.model.UserRole;
-import org.example.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -88,4 +86,3 @@ public class JwtTokenProvider {
     }
 
 }
-*/

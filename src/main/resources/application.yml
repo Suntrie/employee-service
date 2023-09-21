@@ -8,6 +8,23 @@ spring.liquibase.change-log: classpath:db/changelog/db.changelog-master.xml
 spring:
   jpa:
     open-in-view: false
+  kafka:
+    client-id: employee-service
+    bootstrap-servers: 127.0.0.1:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.UUIDSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      enabled: false
+      auto-offset-reset: earliest
+      group-id: test-group
+      key-deserializer: org.apache.kafka.common.serialization.UUIDDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    properties:
+      spring.json.trusted.packages: '*'
+    topic:
+      on-employee-change: on-employee-change-topic
+
 
 spring.datasource.driver-class-name: org.postgresql.Driver
 spring.jpa.show-sql: true
@@ -23,6 +40,8 @@ springdoc:
     operations-sorter: method
 
 logging:
+  file:
+    name: './log/app.log'
   level:
     root: DEBUG
     org.springframework.web: DEBUG
